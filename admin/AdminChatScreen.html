@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>แชท | WellBuddy Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="css/adminChat.css" />
+</head>
+<body>
+
+  <!-- ── Topbar ── -->
+  <header class="topbar">
+    <div class="brand-group">
+      <a href="Contact.html" class="back-nav-btn">
+        <i class="fa-solid fa-arrow-left"></i> <span>กลับสู่หน้าติดต่อสอบถาม</span>
+      </a>
+      <div class="page-title" id="topPageTitle">Desktop - 7</div>
+    </div>
+    <div class="topbar-right">
+      <div class="bell"><i class="fa-regular fa-bell"></i><span class="dot"></span></div>
+      <a href="Profile.html" class="profile-link">
+        <img class="avatar" id="adminAvatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=admin" alt="Admin Avatar" />
+        <div class="admin-info">
+          <div class="name" id="adminName">Admin</div>
+          <div class="role">ผู้ดูแลระบบ</div>
+        </div>
+      </a>
+    </div>
+  </header>
+
+  <!-- ── Screen Container ── -->
+  <main class="screen-wrapper">
+
+    <!-- ══════════════════════════════════════════════════ -->
+    <!--  VIEW 1: รายการแชท (Chat List Screen - Image 2)    -->
+    <!-- ══════════════════════════════════════════════════ -->
+    <div class="view-card" id="viewList">
+      <div class="list-header">
+        <h1 class="list-title">แชท</h1>
+      </div>
+      <div class="chat-user-rows" id="chatUserList">
+        <div class="empty-state">
+          <i class="fa-solid fa-spinner fa-spin" style="font-size:24px;margin-bottom:8px;display:block;"></i>
+          กำลังโหลดรายการแชท...
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════ -->
+    <!--  VIEW 2: ห้องแชทสนทนา (Chat Room Screen - Image 3) -->
+    <!-- ══════════════════════════════════════════════════ -->
+    <div class="view-card" id="viewRoom">
+
+      <!-- Header with back button & User Profile -->
+      <div class="room-header-bar">
+        <button class="btn-circle-back" id="btnBackToList" title="กลับหน้ารายการแชท">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <div class="room-user-profile">
+          <div class="room-user-avatar" id="roomUserAvatar">
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <div class="room-user-name" id="roomUserName">ผู้ใช้งาน</div>
+        </div>
+      </div>
+
+      <!-- Messages Stream -->
+      <div class="room-messages-area" id="roomMessagesArea">
+        <div class="empty-state">กำลังโหลดข้อความ...</div>
+      </div>
+
+      <!-- Bottom Input Bar -->
+      <div class="room-bottom-bar">
+        <button class="btn-plus" title="แนบไฟล์หรือข้อมูลเพิ่มเติม"><i class="fa-solid fa-plus"></i></button>
+        <input type="text" id="inputReplyText" class="pill-input" placeholder="Aa" autocomplete="off" />
+        <button class="btn-send-pill" id="btnSendReply">ส่ง</button>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ── Scripts ── -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/adminChat.js"></script>
+</body>
+</html>
