@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ครอบครัว | Well Buddy Admin</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/sidebar.css" />
+<link rel="stylesheet" href="css/families.css" />
+</head>
+<body>
+
+<div class="main-wrapper">
+
+  <!-- Topbar Header -->
+  <header class="admin-topbar">
+    <div class="topbar-left">
+      <button class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Toggle Sidebar">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div class="breadcrumb-title">
+        Dashboard / <span data-i18n="stat_families">ครอบครัว</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+
+  <!-- ── Summary Row ── -->
+  <div class="summary-row">
+    <div class="summary-card">
+      <div class="label" data-i18n="stat_family_count">กลุ่มครอบครัวทั้งหมด</div>
+      <div class="value" id="statFamilyCount">0</div>
+    </div>
+    <div class="summary-card">
+      <div class="label" data-i18n="stat_member_count">สมาชิกรวมในทุกกลุ่ม</div>
+      <div class="value" id="statMemberCount">0</div>
+    </div>
+  </div>
+
+  <!-- ── Families Table Card ── -->
+  <div class="table-card">
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th data-i18n="th_family_name">ชื่อกลุ่มครอบครัว</th>
+            <th data-i18n="th_invite_code">รหัสเชิญ (Invite Code)</th>
+            <th data-i18n="th_members_count">จำนวนสมาชิก</th>
+            <th data-i18n="th_created_date">วันที่สร้าง</th>
+            <th style="text-align:center;" data-i18n="actions">จัดการ</th>
+          </tr>
+        </thead>
+        <tbody id="familyTableBody">
+          <tr><td colspan="5"><div class="loading" data-i18n="loading">กำลังโหลดข้อมูล...</div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── View Family Members Modal ── -->
+<div class="overlay" id="membersOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>
+        <i class="fa-solid fa-people-roof" style="color:#6fb84c;"></i>
+        <span id="modalFamilyName">สมาชิกกลุ่มครอบครัว</span>
+      </h2>
+      <button class="close-modal-btn" id="btnCloseMembersModal"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <div style="display:flex; gap:10px; align-items:center; margin-bottom:18px; font-size:13px; color:#64748b; background:#f1f5f9; padding:10px 16px; border-radius:12px;">
+      <div>รหัสเชิญ: <b id="modalFamilyCode" style="color:#0284c7; font-family:monospace; font-size:14px;">-</b></div>
+      <div style="margin-left:auto;">จำนวนสมาชิก: <b id="modalMemberCountText" style="color:#1e293b;">0</b> คน</div>
+    </div>
+
+    <!-- Members Container -->
+    <div id="modalMembersList">
+      <div class="loading">กำลังโหลดรายชื่อสมาชิก...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Confirm Remove Member Modal ── -->
+<div class="overlay" id="confirmRemoveOverlay" style="z-index:1000;">
+  <div class="confirm-box">
+    <h3><i class="fa-solid fa-user-minus" style="color:#ef4444; margin-right:6px;"></i> ยืนยันการถอดสมาชิก</h3>
+    <p>คุณต้องการถอดผู้ใช้ <b id="confirmMemberName" style="color:#1e293b;">-</b> ออกจากกลุ่มครอบครัว <b id="confirmFamilyName" style="color:#1e293b;">-</b> ใช่หรือไม่?</p>
+    <div class="confirm-actions">
+      <button class="btn btn-cancel" id="btnCancelRemove">ยกเลิก</button>
+      <button class="btn btn-danger" id="btnConfirmRemove"><i class="fa-solid fa-trash"></i> ถอดออกจากกลุ่ม</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Toast ── -->
+<div class="toast" id="toastEl"></div>
+
+</div> <!-- End main-wrapper -->
+
+<!-- ── Scripts ── -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/families.js"></script>
+</body>
+</html>

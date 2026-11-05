@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>เข้าสู่ระบบ | Well Buddy Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/login.css" />
+</head>
+<body>
+
+<div class="card">
+  <h1>เข้าสู่ระบบ</h1>
+
+  <div class="field">
+    <label for="email">อีเมล</label>
+    <input type="email" id="email" placeholder="admin@wellbuddy.com" />
+  </div>
+
+  <div class="field">
+    <label for="password">รหัสผ่าน</label>
+    <div class="input-wrap">
+      <input type="password" id="password" placeholder="••••••••" />
+      <button class="eye-btn" id="eyeBtn" type="button" aria-label="Toggle Password Visibility">
+        <i class="fa-regular fa-eye-slash" id="eyeIcon"></i>
+      </button>
+    </div>
+    <div class="forgot-wrap">
+      <a class="forgot" href="#">ลืมรหัสผ่าน</a>
+    </div>
+  </div>
+
+  <button class="btn-login" id="loginBtn">ล็อคอิน</button>
+</div>
+
+<!-- ── Scripts ── -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/login.js"></script>
+</body>
+</html>

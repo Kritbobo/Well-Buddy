@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>โปรไฟล์ผู้ดูแลระบบ | Well Buddy Admin</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/sidebar.css" />
+<link rel="stylesheet" href="css/profile.css" />
+</head>
+<body>
+
+<div class="main-wrapper">
+
+  <!-- Topbar Header -->
+  <header class="admin-topbar">
+    <div class="topbar-left">
+      <button class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Toggle Sidebar">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div class="breadcrumb-title">
+        Dashboard / <span data-i18n="nav_admin_profile">โปรไฟล์ผู้ดูแลระบบ</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-container">
+
+    <div class="profile-screen-card">
+
+    <!-- ── Profile Section ── -->
+    <div class="profile-header">
+      <div class="avatar-container" id="avatarUploadBtn" title="คลิกเพื่อเปลี่ยนรูปโปรไฟล์">
+        <img class="avatar-circle" id="profileImg" src="https://api.dicebear.com/7.x/avataaars/svg?seed=admin" alt="Admin Profile" />
+        <div class="avatar-badge"><i class="fa-solid fa-camera"></i></div>
+      </div>
+      <div class="admin-title-name" id="profileName">กำลังโหลด...</div>
+      <div class="admin-title-email" id="profileEmail">-</div>
+    </div>
+
+    <!-- ── Hidden File Input for Avatar ── -->
+    <input type="file" id="avatarFileInput" accept="image/*" style="display:none;" />
+
+    <!-- ── Profile Menu Card ── -->
+    <div class="profile-menu-card">
+
+      <!-- 1. ชื่อผู้ใช้ -->
+      <button class="menu-item" id="btnEditName">
+        <div class="menu-item-left">
+          <i class="fa-regular fa-user"></i>
+          <span data-i18n="menu_username">ชื่อผู้ใช้</span>
+        </div>
+        <div class="menu-item-right">
+          <span class="val-text" id="menuNameText"></span>
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </button>
+
+      <!-- 2. ภาษา (อังกฤษ / ไทย) -->
+      <button class="menu-item" id="btnToggleLang">
+        <div class="menu-item-left">
+          <i class="fa-solid fa-language"></i>
+          <span id="langLabel" data-i18n="menu_language">ภาษา</span>
+        </div>
+        <div class="menu-item-right">
+          <span class="val-text" id="langVal">TH</span>
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </button>
+
+    </div>
+
+    <!-- ── Logout Button ── -->
+    <button class="btn-logout-box" id="btnLogoutAction">
+      <img src="assets/logout.png" alt="ออกจากระบบ" style="width: 22px; height: 22px; object-fit: contain;" />
+      <span data-i18n="logout">ออกจากระบบ</span>
+    </button>
+  </div>
+
+</div>
+
+<!-- ── Edit Name Modal ── -->
+<div class="overlay" id="nameModalOverlay">
+  <div class="modal">
+    <h2 data-i18n="edit_name_modal_title">แก้ไขชื่อผู้ใช้</h2>
+    <div class="form-group">
+      <label data-i18n="name_label">ชื่อ-นามสกุล / ชื่อที่แสดง</label>
+      <input type="text" id="inputNewName" placeholder="กรอกชื่อแอดมิน" />
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-cancel" id="nameCancelBtn" data-i18n="cancel">ยกเลิก</button>
+      <button class="btn btn-primary" id="nameSaveBtn" data-i18n="save">บันทึก</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Toast ── -->
+<div class="toast" id="toastEl"></div>
+
+</div> <!-- End main-wrapper -->
+
+<!-- ── Scripts ── -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/profile.js"></script>
+</body>
+</html>

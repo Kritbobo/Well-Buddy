@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>แดชบอร์ด | Well Buddy Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+  <!-- ── Mobile Backdrop Overlay ── -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ── Left Sidebar (Well Buddy Style) ── -->
+  <aside class="sidebar" id="sidebar">
+
+    <!-- 1. Brand Logo -->
+    <a href="Dashboard.html" class="brand">
+      <div class="brand-logo-text">
+        <span class="part-well">Well</span><span class="part-buddy">Buddy</span>
+      </div>
+      <span class="brand-badge">v1.0</span>
+    </a>
+
+    <!-- 2. Admin Profile Card -->
+    <a href="Profile.html" class="profile-card" title="จัดการโปรไฟล์แอดมิน">
+      <img class="avatar" id="sidebarAdminAvatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=admin" alt="Admin" />
+      <div class="info">
+        <div class="name" id="sidebarAdminName">Admin</div>
+        <div class="role">Administrator</div>
+      </div>
+      <div class="action-icon">
+        <i class="fa-solid fa-sliders"></i>
+      </div>
+    </a>
+
+    <!-- 3. Navigation Links -->
+    <div class="nav-section">
+      <div class="nav-section-title">NAVIGATION</div>
+      <ul class="nav-list">
+        <li>
+          <a href="Dashboard.html" class="nav-link active">
+            <i class="fa-solid fa-chart-pie"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 4. Admin Panel Features -->
+    <div class="nav-section">
+      <div class="nav-section-title">ADMIN PANEL</div>
+      <ul class="nav-list">
+        <li>
+          <a href="UserStatus.html" class="nav-link" title="จัดการผู้ใช้งานและสถานะการระงับ">
+            <i class="fa-solid fa-users"></i>
+            <span data-i18n="stat_users">ผู้ใช้งาน</span>
+          </a>
+        </li>
+        <li>
+          <a href="Menu.html" class="nav-link" title="จัดการเมนูอาหารและวัตถุดิบ">
+            <i class="fa-solid fa-bowl-food"></i>
+            <span data-i18n="stat_menus">เมนูอาหาร</span>
+          </a>
+        </li>
+        <li>
+          <a href="FoodScans.html" class="nav-link" title="ดูประวัติการสแกนอาหาร">
+            <i class="fa-solid fa-expand"></i>
+            <span data-i18n="stat_scans">สแกนอาหาร</span>
+          </a>
+        </li>
+        <li>
+          <a href="Families.html" class="nav-link" title="จัดการกลุ่มครอบครัว">
+            <i class="fa-solid fa-people-roof"></i>
+            <span data-i18n="stat_families">ครอบครัว</span>
+          </a>
+        </li>
+        <li>
+          <a href="Contact.html" class="nav-link" title="ติดต่อสอบถามและแชท">
+            <i class="fa-solid fa-headset"></i>
+            <span data-i18n="stat_inquiries">ติดต่อ/สอบถาม</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 5. Settings & Logout -->
+    <div class="nav-section" style="margin-top: auto; padding-top: 10px;">
+      <div class="nav-section-title">SETTINGS</div>
+      <ul class="nav-list">
+        <li>
+          <a href="Profile.html" class="nav-link" title="โปรไฟล์ผู้ดูแลระบบ">
+            <i class="fa-solid fa-user-gear"></i>
+            <span>โปรไฟล์แอดมิน</span>
+          </a>
+        </li>
+        <li>
+          <a href="javascript:void(0)" class="nav-link logout" id="sidebarLogoutBtn" title="ออกจากระบบ">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <span data-i18n="logout">ออกจากระบบ</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </aside>
+
+  <!-- ── Main Area ── -->
+  <div class="main-wrapper">
+
+    <!-- Topbar Header -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Toggle Sidebar">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="breadcrumb-title">
+          Dashboard / <span data-i18n="overview">ภาพรวมระบบ</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── Center Workspace ── -->
+    <main class="dashboard-workspace">
+
+      <div class="dashboard-container">
+
+        <!-- ── Top Metric Cards (Matching Mockup) ── -->
+        <div class="metrics-grid">
+
+          <!-- 1. ผู้ใช้งาน -->
+          <div class="metric-card active" id="metricCardUsers" data-cat="users" title="คลิกเพื่อดูกราฟผู้ใช้ใหม่">
+            <div class="metric-header">
+              <div class="metric-icon-wrap icon-users">
+                <i class="fa-solid fa-users"></i>
+              </div>
+              <span class="metric-label" data-i18n="stat_users">ผู้ใช้งาน</span>
+            </div>
+            <div class="metric-value" id="statUsers">0</div>
+          </div>
+
+          <!-- 2. เมนูอาหาร -->
+          <a class="metric-card link-card" href="Menu.html" title="คลิกเพื่อไปหน้าจัดการเมนูอาหาร">
+            <div class="metric-header">
+              <div class="metric-icon-wrap icon-menus">
+                <i class="fa-solid fa-carrot"></i>
+              </div>
+              <span class="metric-label" data-i18n="stat_menus">เมนูอาหาร</span>
+            </div>
+            <div class="metric-value" id="statMenus">0</div>
+          </a>
+
+          <!-- 3. สแกน -->
+          <div class="metric-card" id="metricCardScans" data-cat="scans" title="คลิกเพื่อดูกราฟการสแกนอาหาร">
+            <div class="metric-header">
+              <div class="metric-icon-wrap icon-scans">
+                <i class="fa-solid fa-expand"></i>
+              </div>
+              <span class="metric-label" id="labelCardScans" data-i18n="stat_scans_week">สแกนสัปดาห์นี้</span>
+            </div>
+            <div class="metric-value" id="statScansToday">0</div>
+          </div>
+
+          <!-- 4. ถูกระงับ (สีแดง) -->
+          <a class="metric-card link-card" href="UserStatus.html?filter=suspended" title="คลิกเพื่อดูผู้ใช้ที่ถูกระงับ">
+            <div class="metric-header">
+              <div class="metric-icon-wrap icon-danger">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+              </div>
+              <span class="metric-label" data-i18n="stat_suspended">ถูกระงับ</span>
+            </div>
+            <div class="metric-value val-danger" id="statSuspended">0</div>
+          </a>
+
+          <!-- 5. คำถามใหม่ (สีส้ม) -->
+          <a class="metric-card link-card" href="Contact.html" title="คลิกเพื่อดูข้อความสอบถาม">
+            <div class="metric-header">
+              <div class="metric-icon-wrap icon-warning">
+                <i class="fa-solid fa-headset"></i>
+              </div>
+              <span class="metric-label" data-i18n="stat_inquiries_new">คำถามใหม่</span>
+            </div>
+            <div class="metric-value val-warning" id="statInquiriesNew">0</div>
+          </a>
+
+        </div>
+
+        <!-- ── Main 2-Column Grid (Chart + Activities) ── -->
+        <div class="dashboard-main-grid">
+
+          <!-- Left Column: Interactive Trend Chart -->
+          <div class="panel-card chart-panel">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <h2 class="panel-title" id="chartTitle">การสแกนอาหารรายวัน</h2>
+                <div class="panel-subtitle" id="chartSubtitle">สถิติแนวโน้ม 7 วันล่าสุด</div>
+              </div>
+
+              <!-- Filter Controls -->
+              <div class="panel-controls">
+                <div class="category-tabs" id="chartCategoryTabs">
+                  <button class="cat-tab-btn active" data-cat="scans">
+                    <i class="fa-solid fa-expand"></i> <span data-i18n="cat_scans">สแกนอาหาร</span> <span class="tab-badge" id="tabBadgeScans">(0)</span>
+                  </button>
+                  <button class="cat-tab-btn" data-cat="users">
+                    <i class="fa-solid fa-user-plus"></i> <span data-i18n="cat_users">ผู้ใช้ใหม่</span> <span class="tab-badge" id="tabBadgeUsers">(0)</span>
+                  </button>
+                  <button class="cat-tab-btn" data-cat="inquiries">
+                    <i class="fa-solid fa-comments"></i> <span data-i18n="cat_inquiries">คำถาม</span> <span class="tab-badge" id="tabBadgeInquiries">(0)</span>
+                  </button>
+                </div>
+
+                <div class="time-filter-wrap">
+                  <select class="time-select" id="timePeriodSelect" aria-label="เลือกช่วงเวลา">
+                    <option value="week_full" data-i18n="opt_week_full" selected>สัปดาห์นี้ (จ - อา)</option>
+                    <option value="30days" data-i18n="opt_30days">30 วันล่าสุด</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chart Canvas Container -->
+            <div class="chart-canvas-container">
+              <canvas id="trendChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Right Column: Recent Activities Feed -->
+          <div class="panel-card activity-panel">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <h2 class="panel-title" data-i18n="recent_activities">กิจกรรมล่าสุด</h2>
+                <div class="panel-subtitle" data-i18n="activity_subtitle">การเคลื่อนไหวในระบบ</div>
+              </div>
+              <button class="btn-refresh-feed" id="btnRefreshFeed" title="รีเฟรชข้อมูลกิจกรรม">
+                <i class="fa-solid fa-rotate-right"></i>
+              </button>
+            </div>
+
+            <!-- Activity List Container -->
+            <div class="activity-feed-list" id="activityFeedList">
+              <div class="feed-loading">
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                <span data-i18n="loading_activities">กำลังโหลดกิจกรรม...</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- ── Scripts ── -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/sidebar.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+
+</html>

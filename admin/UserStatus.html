@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ผู้ใช้ | Well Buddy Admin</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/sidebar.css" />
+<link rel="stylesheet" href="css/userStatus.css" />
+</head>
+<body>
+
+<div class="main-wrapper">
+
+  <!-- Topbar Header -->
+  <header class="admin-topbar">
+    <div class="topbar-left">
+      <button class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Toggle Sidebar">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div class="breadcrumb-title">
+        Dashboard / <span data-i18n="stat_users">ผู้ใช้งาน</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+
+    <!-- ── Filter Tabs & Search Bar ── -->
+    <div class="header-nav-bar">
+      <div class="user-search-wrap">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" id="userSearchInput" class="user-search-input" placeholder="ค้นหาชื่อผู้ใช้งาน หรือ อีเมล..." data-i18n="search_user_placeholder" autocomplete="off" />
+        <button type="button" id="btnClearUserSearch" class="btn-clear-search" style="display:none;" aria-label="Clear search">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="filter-tabs" id="userFilterTabs">
+        <button class="filter-btn active" data-filter="all"><span data-i18n="filter_all">ทั้งหมด</span> (<span id="countAll">0</span>)</button>
+        <button class="filter-btn" data-filter="active"><span data-i18n="filter_active">ใช้งานปกติ</span> (<span id="countActive">0</span>)</button>
+        <button class="filter-btn" data-filter="suspended"><span data-i18n="filter_suspended">ถูกระงับ</span> (<span id="countSuspended">0</span>)</button>
+      </div>
+    </div>
+
+    <!-- ── User Table Card ── -->
+    <div class="table-card">
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="th_username">ผู้ใช้งาน</th>
+              <th data-i18n="th_health_goals">เป้าหมายสุขภาพ (แคลอรี่ / BMI)</th>
+              <th data-i18n="th_joined_date">วันที่สมัคร</th>
+              <th data-i18n="th_status">สถานะ</th>
+              <th data-i18n="th_actions" style="text-align:center;">จัดการ</th>
+            </tr>
+          </thead>
+          <tbody id="userTableBody">
+            <tr><td colspan="5"><div class="loading" data-i18n="loading">กำลังโหลดข้อมูล...</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Edit User & Health Goals Modal ── -->
+  <div class="overlay" id="editOverlay">
+    <div class="modal">
+      <h2><i class="fa-solid fa-user-pen" style="color:#6fb84c; margin-right:8px;"></i>แก้ไขข้อมูล & เป้าหมายสุขภาพ</h2>
+      <p>ปรับแต่งข้อมูลทั่วไป เป้าหมายแคลอรี่รายวัน และค่า BMI ของผู้ใช้</p>
+      
+      <div class="form-group">
+        <label>ชื่อผู้ใช้งาน</label>
+        <input type="text" id="editNameInput" placeholder="ระบุชื่อผู้ใช้" />
+      </div>
+
+      <div class="form-row-2">
+        <div class="form-group">
+          <label><i class="fa-solid fa-fire" style="color:#ea580c;"></i> เป้าหมายแคลอรี่/วัน (kcal)</label>
+          <input type="number" id="editCaloriesInput" placeholder="เช่น 1850" min="500" max="8000" />
+        </div>
+        <div class="form-group">
+          <label><i class="fa-solid fa-weight-scale" style="color:#0284c7;"></i> ค่าเป้าหมาย BMI</label>
+          <input type="number" step="0.1" id="editTargetBmiInput" placeholder="เช่น 21.5" min="10" max="60" />
+        </div>
+      </div>
+
+      <div class="form-row-2">
+        <div class="form-group">
+          <label>น้ำหนักปัจจุบัน (กก.)</label>
+          <input type="number" step="0.1" id="editWeightInput" placeholder="เช่น 65.0" />
+        </div>
+        <div class="form-group">
+          <label>ส่วนสูง (ซม.)</label>
+          <input type="number" step="0.1" id="editHeightInput" placeholder="เช่น 170.0" />
+        </div>
+      </div>
+
+      <div style="font-size:12px; font-weight:700; color:#64748b; margin-top:8px; margin-bottom:6px;">
+        สัดส่วนสารอาหารหลักเป้าหมาย (Macros Target - กรัม/วัน)
+      </div>
+      <div class="form-row-3">
+        <div class="form-group">
+          <label style="font-size:11px;">คาร์โบไฮเดรต (Carbs)</label>
+          <input type="number" id="editCarbInput" placeholder="กรัม" />
+        </div>
+        <div class="form-group">
+          <label style="font-size:11px;">โปรตีน (Protein)</label>
+          <input type="number" id="editProteinInput" placeholder="กรัม" />
+        </div>
+        <div class="form-group">
+          <label style="font-size:11px;">ไขมัน (Fat)</label>
+          <input type="number" id="editFatInput" placeholder="กรัม" />
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-cancel" id="editCancelBtn">ยกเลิก</button>
+        <button class="btn btn-save" id="editSaveBtn"><i class="fa-solid fa-check"></i> บันทึกข้อมูล</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Reset Password (OTP via Email) Modal ── -->
+  <div class="overlay" id="resetPwdOverlay">
+    <div class="modal">
+      <h2><i class="fa-solid fa-shield-halved" style="color:#0284c7; margin-right:8px;"></i>ส่งรหัส OTP รีเซ็ตรหัสผ่าน</h2>
+      <p>ระบบจะสร้างรหัสยืนยัน OTP (เลข 5 หลัก) และส่งไปยังอีเมลของผู้ใช้ เพื่อให้นำไปกรอกตั้งรหัสผ่านใหม่ในแอป</p>
+      <div style="background:#f8fafc; padding:14px; border-radius:12px; margin-bottom:20px; border:1px solid #e2e8f0;">
+        <div style="font-size:13px; color:#64748b;">ผู้ใช้งาน: <b id="resetPwdUserName" style="color:#1e293b;">-</b></div>
+        <div style="font-size:13px; color:#64748b; margin-top:4px;">อีเมล: <b id="resetPwdUserEmail" style="color:#0284c7;">-</b></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-cancel" id="resetPwdCancelBtn">ยกเลิก</button>
+        <button class="btn btn-primary" id="resetPwdConfirmBtn"><i class="fa-solid fa-paper-plane"></i> ส่งรหัส OTP</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Clear Food Logs Modal ── -->
+  <div class="overlay" id="clearLogsOverlay">
+    <div class="modal">
+      <h2><i class="fa-solid fa-trash-can" style="color:#d97706; margin-right:8px;"></i>ล้างประวัติการบันทึกอาหาร (foodLogs)</h2>
+      <p>คุณต้องการล้างประวัติการบันทึกอาหารทั้งหมดของผู้ใช้ <b id="clearLogsUserName" style="color:#1e293b;">-</b> ใช่หรือไม่?</p>
+      <div style="background:#fffbeb; border:1px solid #fef3c7; color:#92400e; padding:12px; border-radius:10px; font-size:13px; margin-bottom:20px; line-height:1.5;">
+        ⚠️ <b>คำเตือน:</b> การดำเนินการนี้จะลบรายการอาหารที่บันทึกไว้ทั้งหมดของผู้ใช้คนนี้ และรีเซ็ตยอดแคลอรี่สะสม ไม่สามารถเรียกคืนข้อมูลกลับมาได้
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-cancel" id="clearLogsCancelBtn">ยกเลิก</button>
+        <button class="btn btn-warning" id="clearLogsConfirmBtn"><i class="fa-solid fa-eraser"></i> ยืนยันล้างประวัติอาหาร</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Suspend Modal ── -->
+  <div class="overlay" id="suspendOverlay">
+    <div class="modal">
+      <h2 id="suspendTitle">ระงับการใช้งาน</h2>
+      <p id="suspendMessage"></p>
+      <div class="modal-actions">
+        <button class="btn btn-cancel" id="suspendCancelBtn">ยกเลิก</button>
+        <button class="btn btn-danger" id="suspendConfirmBtn">ยืนยัน</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Delete Modal ── -->
+  <div class="overlay" id="deleteOverlay">
+    <div class="modal">
+      <h2><i class="fa-solid fa-triangle-exclamation" style="color:#ef4444; margin-right:8px;"></i>ลบผู้ใช้ถาวร</h2>
+      <p>คุณต้องการลบผู้ใช้ <span id="deleteUserName" style="font-weight:700; color:#1e293b;"></span> ใช่หรือไม่? การลบนี้จะลบข้อมูลออกจากระบบอย่างถาวร</p>
+      <div class="modal-actions">
+        <button class="btn btn-cancel" id="deleteCancelBtn">ยกเลิก</button>
+        <button class="btn btn-danger" id="deleteConfirmBtn"><i class="fa-solid fa-trash"></i> ลบผู้ใช้</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Toast ── -->
+  <div class="toast" id="toastEl"></div>
+
+</div> <!-- End main-wrapper -->
+
+<!-- ── Scripts ── -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/userStatus.js"></script>
+</body>
+</html>

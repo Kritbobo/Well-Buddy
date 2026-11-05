@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>สแกนอาหาร | Well Buddy Admin</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/sidebar.css" />
+<link rel="stylesheet" href="css/foodScans.css" />
+</head>
+<body>
+
+<div class="main-wrapper">
+
+  <!-- Topbar Header -->
+  <header class="admin-topbar">
+    <div class="topbar-left">
+      <button class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Toggle Sidebar">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div class="breadcrumb-title">
+        Dashboard / <span data-i18n="stat_scans">สแกนอาหาร</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+
+  <!-- ── Summary Row ── -->
+  <div class="summary-row">
+    <div class="summary-card">
+      <div class="label" data-i18n="stat_scan_count">รายการสแกนอาหารทั้งหมด</div>
+      <div class="value" id="statScanCount">0</div>
+    </div>
+    <div class="summary-card">
+      <div class="label" data-i18n="stat_avg_kcal">แคลอรีเฉลี่ยต่อจาน</div>
+      <div class="value" id="statAvgKcal">0 <span style="font-size:16px;font-weight:500;color:#888;">kcal</span></div>
+    </div>
+  </div>
+
+  <!-- ── Controls Bar: Search & Calorie Sort ── -->
+  <div class="scans-controls-bar">
+    <div class="scans-search-wrap">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input type="text" id="foodSearchInput" class="scans-search-input" placeholder="ค้นหาชื่ออาหาร..." data-i18n="search_food_placeholder" autocomplete="off" />
+      <button type="button" id="btnClearFoodSearch" class="btn-clear-search" style="display:none;" aria-label="Clear search">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="scans-sort-wrap">
+      <button type="button" id="btnSortKcal" class="btn-sort-toggle" title="เรียงลำดับตามแคลอรี่ (น้อย ➔ มาก / มาก ➔ น้อย)">
+        <i class="fa-solid fa-arrow-down-up-across-line" id="sortKcalIcon"></i>
+        <span id="sortKcalText" data-i18n="sort_kcal_default">เรียงตามแคลอรี่</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Scans Table Card ── -->
+  <div class="table-card">
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th data-i18n="th_food_name">รายการอาหาร</th>
+            <th data-i18n="th_meal_type">มื้ออาหาร</th>
+            <th id="thNutritionCol" class="sortable-th" title="คลิกเพื่อเรียงลำดับแคลอรี่" data-i18n="th_nutrition">พลังงาน & สารอาหาร <i class="fa-solid fa-sort th-sort-icon" id="thSortIcon"></i></th>
+            <th data-i18n="date">วันที่บันทึก</th>
+          </tr>
+        </thead>
+        <tbody id="scanTableBody">
+          <tr><td colspan="4"><div class="loading" data-i18n="loading">กำลังโหลดข้อมูล...</div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  </div>
+
+</div> <!-- End main-wrapper -->
+
+<!-- ── Scripts ── -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/foodScans.js"></script>
+</body>
+</html>

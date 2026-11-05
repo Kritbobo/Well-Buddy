@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>วัตถุดิบ & เมนูอาหาร | Well Buddy Admin</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/sidebar.css" />
+<link rel="stylesheet" href="css/menu.css" />
+</head>
+<body>
+
+<div class="main-wrapper">
+
+  <!-- Topbar Header -->
+  <header class="admin-topbar">
+    <div class="topbar-left">
+      <button class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Toggle Sidebar">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div class="breadcrumb-title">
+        Dashboard / <span data-i18n="stat_menus">เมนูอาหาร</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+
+  <!-- ══════════════════════════════════════════ -->
+  <!--           LIST PAGE                        -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="list-page" id="listPage">
+
+    <!-- Summary Cards -->
+    <div class="summary-row">
+      <div class="summary-card">
+        <div class="label" data-i18n="menu_stat_all">ทั้งหมด</div>
+        <div class="value" id="statAll">0</div>
+      </div>
+      <div class="summary-card">
+        <div class="label" data-i18n="menu_stat_food">อาหาร</div>
+        <div class="value" id="statFood">0</div>
+      </div>
+      <div class="summary-card">
+        <div class="label" data-i18n="menu_stat_drink">เครื่องดื่ม</div>
+        <div class="value" id="statDrink">0</div>
+      </div>
+      <div class="summary-card">
+        <div class="label" data-i18n="menu_stat_dessert">ขนม</div>
+        <div class="value" id="statDessert">0</div>
+      </div>
+    </div>
+
+    <!-- Filter + Add -->
+    <div class="filter-bar">
+      <div class="filter-tabs" id="filterTabs">
+        <button class="filter-tab active" data-cat="" data-i18n="all">ทั้งหมด</button>
+        <button class="filter-tab" data-cat="อาหาร" data-i18n="filter_food">อาหาร</button>
+        <button class="filter-tab" data-cat="เครื่องดื่ม" data-i18n="filter_drink">เครื่องดื่ม</button>
+        <button class="filter-tab" data-cat="ขนม" data-i18n="filter_dessert">ขนม</button>
+      </div>
+      <div class="filter-actions">
+        <button class="btn-add" id="btnAddMenu" data-i18n="btn_add_menu">+ เพิ่มเมนู</button>
+      </div>
+    </div>
+
+    <!-- Menu List -->
+    <div class="menu-list" id="menuList">
+      <div class="loading" data-i18n="loading"><div class="spinner"></div><div>กำลังโหลดข้อมูล...</div></div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!--           FORM PAGE                        -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="form-page" id="formPage">
+
+    <div class="form-header-actions">
+      <button class="form-back" id="formBack"><i class="fa-solid fa-chevron-left"></i></button>
+      <div class="form-header-right">
+        <button type="button" class="btn-auto-translate" id="btnAutoTranslate" title="แปลชื่อเมนู คำอธิบาย และวัตถุดิบเป็นภาษาอังกฤษอัตโนมัติ">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> <span>แปลภาษาอังกฤษอัตโนมัติ</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- รูปภาพ -->
+    <div class="form-section">
+      <div class="form-section-title">รูปภาพเมนูอาหาร</div>
+      <div class="upload-zone" id="imgDropZone">
+        <input type="file" id="imgInput" accept="image/*" multiple />
+        <div class="plus">+</div>
+        <div class="hint">คลิกหรือลากรูปมาวาง (PNG, JPG, WEBP)</div>
+      </div>
+      <div class="upload-progress" id="imgProgress">
+        <div class="bar-text" id="imgProgressText">กำลังประมวลผลรูป...</div>
+        <div class="bar-wrap"><div class="bar-fill" id="imgProgressBar"></div></div>
+      </div>
+      <div class="image-preview-row" id="imgPreview"></div>
+    </div>
+
+    <!-- ข้อมูลพื้นฐาน -->
+    <div class="form-section">
+      <div class="form-row">
+        <div class="form-group" style="flex:1;">
+          <label>ชื่อเมนูอาหาร (ไทย) <span style="color:#e05d5d;">*</span></label>
+          <input type="text" id="fName" placeholder="ระบุชื่อเมนูอาหาร เช่น ต้มยำกุ้งน้ำข้น" />
+        </div>
+        <div class="form-group" style="flex:1;">
+          <label>ชื่อเมนูภาษาอังกฤษ (English) <span class="badge-en">EN</span></label>
+          <input type="text" id="fNameEn" placeholder="e.g. Creamy Tom Yum Kung Soup" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>แคลเลอรี่ (kcal)</label>
+          <input type="text" id="fKcal" placeholder="ระบุตัวเลข เช่น 249 หรือ ~250" />
+        </div>
+        <div class="form-group">
+          <label>โปรตีน (g)</label>
+          <input type="text" id="fProtein" placeholder="ระบุตัวเลข เช่น 18 หรือ ~20" />
+        </div>
+        <div class="form-group">
+          <label>คาร์บ (g)</label>
+          <input type="text" id="fCarb" placeholder="ระบุตัวเลข เช่น 45 หรือ ~50" />
+        </div>
+        <div class="form-group">
+          <label>ไขมัน (g)</label>
+          <input type="text" id="fFat" placeholder="ระบุตัวเลข เช่น 12 หรือ ~15" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group" style="flex:1;">
+          <label>คำอธิบาย (ไทย)</label>
+          <input type="text" id="fSubtitle" placeholder="ระบุคำอธิบายเมนูอาหาร เช่น รสชาติจัดจ้าน หอมสมุนไพรไทย" />
+        </div>
+        <div class="form-group" style="flex:1;">
+          <label>คำอธิบายภาษาอังกฤษ (English) <span class="badge-en">EN</span></label>
+          <input type="text" id="fSubtitleEn" placeholder="e.g. Rich Thai spicy soup with aromatic herbs" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group dropdown-wrap" id="fCategoryGroup">
+          <label>หมวดหมู่</label>
+          <select id="fCategory">
+            <option value="อาหาร">อาหาร</option>
+            <option value="เครื่องดื่ม">เครื่องดื่ม</option>
+            <option value="ขนม">ขนม</option>
+            <option value="__custom__">+ อื่นๆ (พิมพ์เอง)...</option>
+          </select>
+          <div id="fCategoryCustomWrap" class="category-custom-wrap" style="display:none;">
+            <input type="text" id="fCategoryCustom" placeholder="ระบุชื่อหมวดหมู่ เช่น อาหารคลีน, อาหารว่าง" />
+            <button type="button" id="btnCategoryCustomBack" class="category-back-btn" title="กลับไปเลือกจากรายการ">
+              <i class="fa-solid fa-list-ul"></i>
+            </button>
+          </div>
+        </div>
+        <div class="form-group dropdown-wrap">
+          <label>ระดับความยาก</label>
+          <select id="fDifficulty">
+            <option value="ยาก">ยาก</option>
+            <option value="กลาง">กลาง</option>
+            <option value="ง่าย">ง่าย</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group" style="flex:2;">
+          <label>ลิงก์วิดีโอขั้นตอนการทำ</label>
+          <input type="url" id="fVideo" placeholder="https://youtube.com/..." />
+        </div>
+        <div class="form-group">
+          <label>เวลาที่ใช้ (นาที)</label>
+          <div class="time-input-wrap">
+            <input type="number" id="fTime" value="10" min="1" />
+            <button class="time-btn" id="timeUp" type="button">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- รายการวัตถุดิบ -->
+    <div class="form-section">
+      <div class="form-section-title">รายการวัตถุดิบ</div>
+      <div id="ingredientContainer"></div>
+      <button class="add-group-btn" id="btnAddGroup" type="button">+ เพิ่มกลุ่มวัตถุดิบ</button>
+    </div>
+
+    <!-- อุปกรณ์ที่ใช้ -->
+    <div class="form-section">
+      <div class="form-section-title">อุปกรณ์ที่ใช้</div>
+      <div id="equipmentContainer"></div>
+      <button class="add-item-btn" id="btnAddEquipment" type="button">+ เพิ่มอุปกรณ์</button>
+    </div>
+
+    <!-- ขั้นตอนการทำ -->
+    <div class="form-section">
+      <div class="form-section-title">ขั้นตอนการทำ</div>
+      <div id="manualContainer"></div>
+      <div class="add-step-row">
+        <button class="btn-add-step" id="btnAddStep" type="button">+ เพิ่มขั้นตอนการทำ</button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="form-footer">
+      <button class="btn-cancel" id="formCancelBtn">ยกเลิก</button>
+      <button class="btn-save" id="formSaveBtn">บันทึก</button>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ── Hidden input for ingredient photo upload ── -->
+<input type="file" id="igPhotoInput" accept="image/*" style="display:none;" />
+
+<!-- ── Delete Confirm Modal ── -->
+<div class="overlay" id="deleteOverlay">
+  <div class="modal">
+    <h2>ลบเมนู</h2>
+    <p>คุณต้องการลบเมนู <span class="confirm-name" id="deleteMenuName"></span> ใช่หรือไม่? การลบไม่สามารถย้อนกลับได้</p>
+    <div class="modal-actions">
+      <button class="btn btn-cancel-modal" id="deleteCancelBtn">ยกเลิก</button>
+      <button class="btn btn-danger" id="deleteConfirmBtn">ลบเมนู</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Manage Custom Units Modal ── -->
+<div class="overlay" id="manageUnitsOverlay">
+  <div class="modal" style="max-width: 400px;">
+    <h2>จัดการหน่วยวัดที่กำหนดเอง</h2>
+    <p style="margin-bottom: 14px; font-size: 13px; color: #666;">เลือกไอคอนถังขยะเพื่อลบหน่วยวัดที่เคยบันทึกไว้</p>
+    <div id="customUnitsList" class="custom-units-list"></div>
+    <div class="modal-actions" style="margin-top: 18px;">
+      <button class="btn btn-cancel-modal" id="closeManageUnitsBtn" style="width: 100%;">ปิด</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Toast ── -->
+<div class="toast" id="toastEl"></div>
+
+</div> <!-- End main-wrapper -->
+
+<!-- ── Scripts ── -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/translator.js"></script>
+<script src="js/nutritionPresets.js"></script>
+<script src="js/menu.js"></script>
+</body>
+</html>

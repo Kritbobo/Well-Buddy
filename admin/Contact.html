@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title data-i18n="contact_mgmt_title">ติดต่อ/สอบถาม & แชท | Well Buddy Admin</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/sidebar.css" />
+<link rel="stylesheet" href="css/contact.css" />
+</head>
+<body>
+
+<div class="main-wrapper">
+
+  <!-- Topbar Header -->
+  <header class="admin-topbar">
+    <div class="topbar-left">
+      <button class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Toggle Sidebar">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div class="breadcrumb-title">
+        Dashboard / <span data-i18n="stat_inquiries">ติดต่อ/สอบถาม & แชท</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  VIEW 1: Inquiries & Chats List                    -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div id="viewListArea">
+
+    <!-- ── Navigation Bar (Filters) ── -->
+    <div class="header-nav-bar" style="justify-content: flex-end;">
+      <div class="filter-tabs" id="contactFilterTabs">
+        <button class="filter-btn active" data-filter="all" data-i18n="all">ทั้งหมด</button>
+        <button class="filter-btn" data-filter="pending" data-i18n="filter_pending">รอตอบกลับ</button>
+        <button class="filter-btn" data-filter="resolved" data-i18n="filter_resolved">ดำเนินการแล้ว</button>
+      </div>
+    </div>
+
+    <!-- ── Summary Row ── -->
+    <div class="summary-row">
+      <div class="summary-card">
+        <div class="label" data-i18n="stat_total_inquiries">ข้อความติดต่อทั้งหมด</div>
+        <div class="value" id="statTotalInquiries">0</div>
+      </div>
+      <div class="summary-card">
+        <div class="label" data-i18n="stat_pending_inquiries">รอการตรวจสอบ/ตอบกลับ</div>
+        <div class="value" id="statPendingInquiries" style="color:#ea6b35;">0</div>
+      </div>
+    </div>
+
+    <!-- ── Contact Inquiries & Chat Table Card ── -->
+    <div class="table-card">
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="th_sender">ผู้ส่ง</th>
+              <th data-i18n="th_subject_msg">หัวข้อ / ข้อความล่าสุด</th>
+              <th data-i18n="date">วันที่ / เวลา</th>
+              <th data-i18n="status">สถานะ</th>
+              <th data-i18n="actions">จัดการ</th>
+            </tr>
+          </thead>
+          <tbody id="inquiryTableBody">
+            <tr><td colspan="5"><div class="loading" data-i18n="loading">กำลังโหลดข้อมูล...</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  VIEW 2: Chat Room Screen                          -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="chat-screen-card" id="viewChatRoom">
+
+    <!-- Header with circular back button and user info -->
+    <div class="room-header">
+      <button class="btn-circle-back" id="btnLeaveChatRoom" title="กลับหน้ารายการ">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <div class="room-user-info">
+        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=user" class="room-user-avatar" id="roomUserAvatar" alt="" />
+        <div class="room-user-name" id="roomUserName">ผู้ใช้งาน</div>
+      </div>
+    </div>
+
+    <!-- Messages Area -->
+    <div class="room-messages-container" id="roomMessagesContainer">
+      <div class="empty">กำลังโหลดข้อความ...</div>
+    </div>
+
+    <!-- Bottom Input Bar with Plus Attachment Button -->
+    <div class="room-bottom-bar">
+      <input type="file" id="chatImageInput" accept="image/*" style="display:none;" />
+      <button class="btn-plus-attach" id="btnAttachImage" title="แนบรูปภาพ">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+      <input type="text" id="chatTextInput" class="pill-text-input" placeholder="Aa" autocomplete="off" />
+      <button class="btn-send-pill" id="btnSendChat">ส่ง</button>
+    </div>
+
+  </div>
+
+  </div>
+
+</div> <!-- End main-wrapper -->
+
+<!-- ── Scripts ── -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/contact.js"></script>
+</body>
+</html>
